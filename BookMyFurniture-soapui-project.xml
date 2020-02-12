@@ -88,7 +88,6 @@ String name = slurper.body.name
 String color = slurper.body.color
 Integer price = slurper.body.price
 
-
 //Get product details from custom proprties
 String nameFromProp = testRunner.testCase.getPropertyValue("Name")
 String colorFromProp = testRunner.testCase.getPropertyValue("Color")
@@ -104,25 +103,25 @@ try {
      executionStatus = "Passed" 
      log.info("Product Id "+productId+" successfully created")
     } catch(AssertionError assertionError) {
-        log.info(assertionError)
+        log.error(assertionError)
         executionStatus = "Failed"
     }
-    
+
+//Printing Status
+log.info("Execution Status : "+ executionStatus)
+
 //Store Testcase name in the property file
 def tcName = testRunner.testCase.name;
 testRunner.testCase.getTestStepByName("PostReqProperties").setPropertyValue("TestCase Name", tcName)
-log.info("Executing ---- "+tcName)
 
 //Store Request body in the property file
 def req = testRunner.testCase.testSteps["PostReq"].httpRequest.requestContent;
 def reqBody = new String(req)
 testRunner.testCase.getTestStepByName("PostReqProperties").setPropertyValue("Request Body", reqBody)
-log.info("Request ---- \n "+reqBody)
 
 //Store Response body in the property file
 def ResBody = testRunner.testCase.testSteps["PostReq"].testRequest.response.contentAsString;
 testRunner.testCase.getTestStepByName("PostReqProperties").setPropertyValue("Response Body", ResBody)
-log.info("Request ---- \n "+ResBody)
 
 //Store httpStatusCode in the property file
 testRunner.testCase.getTestStepByName("PostReqProperties").setPropertyValue("httpStatusCode", httpStatusCode)
@@ -137,10 +136,7 @@ testRunner.testCase.testSuite.setPropertyValue("ProductId", productId.toString()
 testRunner.testCase.getTestStepByName("PostReqProperties").setPropertyValue("ProductId", productId.toString())
 testRunner.testCase.getTestStepByName("PostReqProperties").setPropertyValue("Name", name)
 testRunner.testCase.getTestStepByName("PostReqProperties").setPropertyValue("Color", color)
-testRunner.testCase.getTestStepByName("PostReqProperties").setPropertyValue("Price", price.toString())
-
-//Printing Status
-log.info("Execution Status : "+ executionStatus)</script></con:config></con:testStep><con:testStep type="jdbc" name="JDBC_PostReq" id="7d6bb9a3-6cd1-425a-9480-2964e42b2b1b"><con:settings/><con:config xsi:type="con:JdbcRequestTestStep" convertColumnNamesToUpperCase="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:driver>com.mysql.jdbc.Driver</con:driver><con:connectionString>jdbc:mysql://localhost:3306/sdet?user=root&amp;password=Welcome123$&amp;serverTimezone=UTC</con:connectionString><con:query>INSERT INTO ${#TestSuite#TableName} VALUES ('${PostReqProperties#ProductId}','${PostReqProperties#Name}','${PostReqProperties#Color}','${PostReqProperties#Price}');</con:query><con:storedProcedure>false</con:storedProcedure><con:assertion type="JDBC Timeout" id="f6ada258-9c3c-4efd-9332-69717e5bf28a" name="JDBC Timeout"/><con:assertion type="JDBC Status" id="5bed7931-7ce3-4060-9756-0cd9306779a7" name="JDBC Status"/><con:properties/></con:config></con:testStep><con:properties><con:property><con:name>Availability</con:name><con:value>true</con:value></con:property><con:property><con:name>CategoryId</con:name><con:value>2</con:value></con:property><con:property><con:name>Color</con:name><con:value>Black</con:value></con:property><con:property><con:name>CreationOn</con:name><con:value>2020-01-01</con:value></con:property><con:property><con:name>Description</con:name><con:value>Office Chair with Arms Seating Back Rest</con:value></con:property><con:property><con:name>Discount</con:name><con:value>10</con:value></con:property><con:property><con:name>MaterialDescription</con:name><con:value>Nonwoven fabric</con:value></con:property><con:property><con:name>Name</con:name><con:value>Chair</con:value></con:property><con:property><con:name>Price</con:name><con:value>1200</con:value></con:property><con:property><con:name>UpdateOn</con:name><con:value>2020-01-01</con:value></con:property><con:property><con:name>Warranty</con:name><con:value>1</con:value></con:property></con:properties></con:testCase><con:testCase id="b4fb8dcb-1b69-4815-bbf0-943a285ee04b" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TC_002_GetReq_GetProduct" searchProperties="true"><con:description>TestCase generated for REST Resource [GetProduct] located at [/rest/api/product/2]</con:description><con:settings/><con:testStep type="restrequest" name="GetReq" id="780fbc10-94de-4fbc-834b-651990bc9328"><con:settings/><con:config service="http://okmry52647dns.eastus.cloudapp.azure.com:8089" resourcePath="/rest/api/product/{ProductId}" methodName="GETMethod" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="GetReq" id="7656d098-b09e-49ea-aca1-be546f733487" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://okmry52647dns.eastus.cloudapp.azure.com:8089</con:endpoint><con:request/><con:originalUri>http://okmry52647dns.eastus.cloudapp.azure.com/rest/api/product/2</con:originalUri><con:assertion type="Valid HTTP Status Codes" id="0ee427b1-ce2d-48db-a2ab-fc2e5b5e38f0" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="ProductId" value="${#TestSuite#ProductId}" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>ProductId</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="properties" name="GetReqProperties" id="af209145-c38d-44d2-9a6e-d76fa773d9a0"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>TestCase Name</con:name><con:value>TC_002_GetReq_GetProduct</con:value></con:property><con:property><con:name>Request Body</con:name><con:value>GET http://okmry52647dns.eastus.cloudapp.azure.com:8089/rest/api/product/360 HTTP/1.1
+testRunner.testCase.getTestStepByName("PostReqProperties").setPropertyValue("Price", price.toString())</script></con:config></con:testStep><con:testStep type="jdbc" name="JDBC_PostReq" id="7d6bb9a3-6cd1-425a-9480-2964e42b2b1b"><con:settings/><con:config xsi:type="con:JdbcRequestTestStep" convertColumnNamesToUpperCase="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:driver>com.mysql.jdbc.Driver</con:driver><con:connectionString>jdbc:mysql://localhost:3306/sdet?user=root&amp;password=Welcome123$&amp;serverTimezone=UTC</con:connectionString><con:query>INSERT INTO ${#TestSuite#TableName} VALUES ('${PostReqProperties#ProductId}','${PostReqProperties#Name}','${PostReqProperties#Color}','${PostReqProperties#Price}');</con:query><con:storedProcedure>false</con:storedProcedure><con:assertion type="JDBC Timeout" id="f6ada258-9c3c-4efd-9332-69717e5bf28a" name="JDBC Timeout"/><con:assertion type="JDBC Status" id="5bed7931-7ce3-4060-9756-0cd9306779a7" name="JDBC Status"/><con:properties/></con:config></con:testStep><con:properties><con:property><con:name>Availability</con:name><con:value>true</con:value></con:property><con:property><con:name>CategoryId</con:name><con:value>2</con:value></con:property><con:property><con:name>Color</con:name><con:value>Black</con:value></con:property><con:property><con:name>CreationOn</con:name><con:value>2020-01-01</con:value></con:property><con:property><con:name>Description</con:name><con:value>Office Chair with Arms Seating Back Rest</con:value></con:property><con:property><con:name>Discount</con:name><con:value>10</con:value></con:property><con:property><con:name>MaterialDescription</con:name><con:value>Nonwoven fabric</con:value></con:property><con:property><con:name>Name</con:name><con:value>Chair</con:value></con:property><con:property><con:name>Price</con:name><con:value>1200</con:value></con:property><con:property><con:name>UpdateOn</con:name><con:value>2020-01-01</con:value></con:property><con:property><con:name>Warranty</con:name><con:value>1</con:value></con:property></con:properties></con:testCase><con:testCase id="b4fb8dcb-1b69-4815-bbf0-943a285ee04b" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TC_002_GetReq_GetProduct" searchProperties="true"><con:description>TestCase generated for REST Resource [GetProduct] located at [/rest/api/product/2]</con:description><con:settings/><con:testStep type="restrequest" name="GetReq" id="780fbc10-94de-4fbc-834b-651990bc9328"><con:settings/><con:config service="http://okmry52647dns.eastus.cloudapp.azure.com:8089" resourcePath="/rest/api/product/{ProductId}" methodName="GETMethod" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="GetReq" id="7656d098-b09e-49ea-aca1-be546f733487" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://okmry52647dns.eastus.cloudapp.azure.com:8089</con:endpoint><con:request/><con:originalUri>http://okmry52647dns.eastus.cloudapp.azure.com/rest/api/product/2</con:originalUri><con:assertion type="Valid HTTP Status Codes" id="0ee427b1-ce2d-48db-a2ab-fc2e5b5e38f0" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="ProductId" value="${#TestSuite#ProductId}" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>ProductId</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="properties" name="GetReqProperties" id="af209145-c38d-44d2-9a6e-d76fa773d9a0"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>TestCase Name</con:name><con:value>TC_002_GetReq_GetProduct</con:value></con:property><con:property><con:name>Request Body</con:name><con:value>GET http://okmry52647dns.eastus.cloudapp.azure.com:8089/rest/api/product/360 HTTP/1.1
 Accept-Encoding: gzip,deflate
 Host: okmry52647dns.eastus.cloudapp.azure.com:8089
 Connection: Keep-Alive
@@ -175,11 +171,12 @@ try {
      executionStatus = "Passed" 
      log.info("Product Id "+pIdFromProp+" successfully retrieved")
     } catch(AssertionError assertionError) {
-        log.info(assertionError)
+        log.error(assertionError)
         executionStatus = "Failed"
     }
    
 log.info("Execution Status : "+ executionStatus)
+
 //Store Testcase name in the property file
 def tcName = testRunner.testCase.name;
 testRunner.testCase.getTestStepByName("GetReqProperties").setPropertyValue("TestCase Name", tcName)
